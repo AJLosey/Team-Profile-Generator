@@ -16,12 +16,121 @@
 // WHEN I decide to finish building my team
 // THEN I exit the application, and the HTML is generated
 
+// This homework will combine many of the skills we've covered so far. In addition to the User Story and Acceptance Criteria, we’ve provided some guidelines to help get started.
+
+// Your application should use [Jest](https://www.npmjs.com/package/jest) for running the unit tests and [Inquirer](https://www.npmjs.com/package/inquirer) for collecting input from the user. The application will be invoked by using the following command:
+
+// ```bash
+// node index.js
+// ```
+
+// It is recommended that you start with a directory structure that looks like the following example:
+
+// ```md
+// .
+// ├── __tests__/             //jest tests
+// │   ├── Employee.test.js
+// │   ├── Engineer.test.js
+// │   ├── Intern.test.js
+// │   └── Manager.test.js
+// ├── dist/                  // rendered output (HTML) and CSS style sheet      
+// ├── lib/                   // classes
+// ├── src/                   // template helper code 
+// ├── .gitignore             // indicates which folders and files Git should ignore
+// ├── index.js               // runs the application
+// └── package.json           
+// ```
+
+// **Important**: Make sure that you remove `dist` from the `.gitignore` file so that Git will track this folder and include it when you push up to your application's repository.
+
+// The application must include `Employee`, `Manager`, `Engineer`, and `Intern` classes. The tests for these classes (in the `_tests_` directory) must ALL pass.
+
+// The first class is an `Employee` parent class with the following properties and methods:
+
+// * `name`
+
+// * `id`
+
+// * `email`
+
+// * `getName()`
+
+// * `getId()`
+
+// * `getEmail()`
+
+// * `getRole()`&mdash;returns `'Employee'`
+
+// The other three classes will extend `Employee`.
+
+// In addition to `Employee`'s properties and methods, `Manager` will also have the following:
+
+// * `officeNumber`
+
+// * `getRole()`&mdash;overridden to return `'Manager'`
+
+// In addition to `Employee`'s properties and methods, `Engineer` will also have the following:
+
+// * `github`&mdash;GitHub username
+
+// * `getGithub()`
+
+// * `getRole()`&mdash;overridden to return `'Engineer'`
+
+// In addition to `Employee`'s properties and methods, `Intern` will also have the following:
+
+// * `school`
+
+// * `getSchool()`
+
+// * `getRole()`&mdash;overridden to return `'Intern'`
+
+// Finally, although it’s not a requirement, consider adding validati
+
 var inquirer = require('inquirer');
+
+
 
 inquirer
     .prompt([
         {
             type: "input",
-            message: ""
-        }
+            message: "Who is your project manager?",
+            name: "manageName"
+        },
     ])
+    .then((answers) => {
+        const manager = new Manager(answers.manangeName)
+
+    })
+    .catch(error => console.log(error));
+
+class Employee {
+    constructor(eName) {
+        this.eName = eName;
+
+    }
+
+
+}
+
+class Manager extends Employee {
+    constructor(eName) {
+        super(eName)
+
+    }
+
+}
+
+    //todo: create tests
+
+    //todo: prompt information for manage
+
+    //todo: figure out how to give option for engineer or intern
+
+    //todo: make classes
+
+    //todo: use inquirer input to make instances of those classes
+
+    //todo: add classes to html
+
