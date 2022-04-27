@@ -83,39 +83,40 @@ inquirer
         },
     ])
     .then((answers) => {
-        //const manager = new Manager(answers.manangeName)
-        //manager.addHTML
-        
-       inquirerLoop();
+        const manager = new Manager(answers.manangeName, answers.manageID, answers.manageEmail, answers.manageOffice);
+
+        manager.addHTML();
+
+        inquirerLoop();
 
     })
     .catch(error => console.log(error));
 
-const inquirerLoop = function(){
+const inquirerLoop = function () {
     inquirer
         .prompt([
-        {
-            type: "list",
-            message: "Do you want to add an engineer or an intern?",
-            name: "engineerOrIntern",
-            choices: ["engineer", "intern", "finish"]
-        },
-    ])
-    .then((answers) => {
-    if(answers.engineerOrIntern == "engineer"){
-        inquirerEngineer();
-    }
-    if(answers.engineerOrIntern == "intern"){
-        inquirerIntern();
-    }
+            {
+                type: "list",
+                message: "Do you want to add an engineer or an intern?",
+                name: "engineerOrIntern",
+                choices: ["engineer", "intern", "finish"]
+            },
+        ])
+        .then((answers) => {
+            if (answers.engineerOrIntern == "engineer") {
+                inquirerEngineer();
+            }
+            if (answers.engineerOrIntern == "intern") {
+                inquirerIntern();
+            }
 
-    })
-    .catch(error => console.log(error));   
+        })
+        .catch(error => console.log(error));
 }
 
-const inquirerEngineer = function() {
+const inquirerEngineer = function () {
     inquirer
-    // THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
+        // THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
         .prompt([
             {
                 type: "input",
@@ -140,18 +141,18 @@ const inquirerEngineer = function() {
 
         ])
         .then((answers) => {
-             //let engineer = new Engineer (answers.engName)
-        //engineer.addHTML
-        console.log(answers);
-        inquirerLoop();
-    
+            //let engineer = new Engineer (answers.engName)
+            //engineer.addHTML
+            console.log(answers);
+            inquirerLoop();
+
         })
-    .catch(error => console.log(error));   
+        .catch(error => console.log(error));
 }
 
-const inquirerIntern = function() {
+const inquirerIntern = function () {
     inquirer
-    // THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
+        // THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
         .prompt([
             {
                 type: "input",
@@ -176,12 +177,12 @@ const inquirerIntern = function() {
 
         ])
         .then((answers) => {
-             //let intern = new Intern (answers.intName)
-        //intern.addHTML
-        console.log(answers);
-        inquirerLoop();
+            //let intern = new Intern (answers.intName)
+            //intern.addHTML
+            console.log(answers);
+            inquirerLoop();
         })
-    .catch(error => console.log(error));   
+        .catch(error => console.log(error));
 }
 
 class Employee {
@@ -207,28 +208,101 @@ class Employee {
         let text = `<div class="card row m-5">
         <div class="card-body">
         <ul class="list-group">
-        <li class="list-group-item">An item</li>
-        <li class="list-group-item">A second item</li>
-        <li class="list-group-item">A third item</li>
-        <li class="list-group-item">A fourth item</li>
-        <li class="list-group-item">And a fifth one</li>
+        <li class="list-group-item">Name: ${this.name}</li>
+        <li class="list-group-item">ID: ${this.id}</li>
+        <li class="list-group-item">email: <a href = "mailto: ${this.email}>${this.email}</a> </li>
+        <li class="list-group-item">${this.getRole()}</li>
       </ul>
         </div>
       </div>`
 
         $("#content").append(text)
     }
-
-
 }
 
-// class Manager extends Employee {
-//     constructor(eName) {
-//         super(eName)
+class Manager extends Employee {
+    constructor(eName, id, email, officeNum) {
+        this.officeNum = officeNum;
+        super(eName, id, email)
+    }
+    getRole() {
+        return "Manager"
+    }
+    addHTML() {
 
-//     }
+        let text = `<div class="card row m-5">
+        <div class="card-body">
+        <ul class="list-group">
+        <li class="list-group-item">Name: ${this.name}</li>
+        <li class="list-group-item">ID: ${this.id}</li>
+        <li class="list-group-item">Office: ${this.officeNum}</li>
+        <li class="list-group-item">email: <a href = "mailto: ${this.email}>${this.email}</a> </li>
+        <li class="list-group-item">${this.getRole()}</li>
+      </ul>
+        </div>
+      </div>`
 
-// }
+        $("#content").append(text)
+    }
+}
+
+class Engineer extends Employee {
+    constructor(eName, id, email, github) {
+        this.github = github;
+        super(eName, id, email)
+    }
+    getRole() {
+        return "Engineer"
+    }
+    getGit() {
+        return this.github;
+    }
+    addHTML() {
+
+        let text = `<div class="card row m-5">
+        <div class="card-body">
+        <ul class="list-group">
+        <li class="list-group-item">Name: ${this.name}</li>
+        <li class="list-group-item">ID: ${this.id}</li>
+        <li class="list-group-item">github: <a href="${this.getGit()}">${this.getGit()}</a></li>
+        <li class="list-group-item">email: <a href="mailto: ${this.email}>${this.email}</a> </li>
+        <li class="list-group-item">${this.getRole()}</li>
+      </ul>
+        </div>
+      </div>`
+
+        $("#content").append(text)
+    }
+}
+
+class Intern extends Employee {
+    constructor(eName, id, email, school) {
+        this.school = school;
+        super(eName, id, email)
+    }
+    getRole() {
+        return "Intern"
+    }
+    getSchool() {
+        return this.school;
+    }
+    addHTML() {
+
+        let text = `<div class="card row m-5">
+        <div class="card-body">
+        <ul class="list-group">
+        <li class="list-group-item">Name: ${this.name}</li>
+        <li class="list-group-item">ID: ${this.id}</li>
+        <li class="list-group-item">school: ${this.getSchool()}</li>
+        <li class="list-group-item">email: <a href="mailto: ${this.email}>${this.email}</a> </li>
+        <li class="list-group-item">${this.getRole()}</li>
+      </ul>
+        </div>
+      </div>`
+
+        $("#content").append(text)
+    }
+}
 
 module.exports.Employee = Employee
 module.exports.Engineer = Engineer
@@ -237,9 +311,7 @@ module.exports.Manager = Manager
 
 
 
-    //todo: make classes 
-    
-    //todo: create tests
+    //todo: make classes
 
     //todo: use inquirer input to make instances of those classes
 
