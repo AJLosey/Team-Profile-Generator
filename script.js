@@ -6,13 +6,6 @@
 // THEN that GitHub profile opens in a new tab
 
 
-
-
-// WHEN I select the engineer option
-
-// WHEN I select the intern option
-
-// WHEN I decide to finish building my team
 // THEN I exit the application, and the HTML is generated
 
 
@@ -208,9 +201,12 @@ const inquirerIntern = function() {
 
 // }
 
-    //todo: prompt information for manage
+module.exports.Employee = Employee
+module.exports.Engineer = Engineer
+module.exports.Intern = Intern
+module.exports.Manager = Manager
 
-    //todo: figure out how to give option for engineer or intern
+
 
     //todo: make classes 
     
