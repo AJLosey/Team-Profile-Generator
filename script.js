@@ -1,45 +1,20 @@
-// GIVEN a command-line application that accepts user input
-// WHEN I am prompted for my team members and their information
+
 // THEN an HTML file is generated that displays a nicely formatted team roster based on user input
 // WHEN I click on an email address in the HTML
 // THEN my default email program opens and populates the TO field of the email with the address
 // WHEN I click on the GitHub username
 // THEN that GitHub profile opens in a new tab
-// WHEN I start the application
 
-// WHEN I enter the team manager’s name, employee ID, email address, and office number
-// THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team
+
+
+
 // WHEN I select the engineer option
-// THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username, and I am taken back to the menu
+
 // WHEN I select the intern option
-// THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
+
 // WHEN I decide to finish building my team
 // THEN I exit the application, and the HTML is generated
 
-// This homework will combine many of the skills we've covered so far. In addition to the User Story and Acceptance Criteria, we’ve provided some guidelines to help get started.
-
-// Your application should use [Jest](https://www.npmjs.com/package/jest) for running the unit tests and [Inquirer](https://www.npmjs.com/package/inquirer) for collecting input from the user. The application will be invoked by using the following command:
-
-// ```bash
-// node index.js
-// ```
-
-// It is recommended that you start with a directory structure that looks like the following example:
-
-// ```md
-// .
-// ├── __tests__/             //jest tests
-// │   ├── Employee.test.js
-// │   ├── Engineer.test.js
-// │   ├── Intern.test.js
-// │   └── Manager.test.js
-// ├── dist/                  // rendered output (HTML) and CSS style sheet      
-// ├── lib/                   // classes
-// ├── src/                   // template helper code 
-// ├── .gitignore             // indicates which folders and files Git should ignore
-// ├── index.js               // runs the application
-// └── package.json           
-// ```
 
 // **Important**: Make sure that you remove `dist` from the `.gitignore` file so that Git will track this folder and include it when you push up to your application's repository.
 
@@ -92,7 +67,6 @@ var inquirer = require('inquirer');
 
 
 inquirer
-// THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
     .prompt([
         {
             type: "input",
@@ -101,33 +75,121 @@ inquirer
         },
         {
             type: "input",
-            message: "What is his employee ID?",
+            message: "What is their employee ID?",
             name: "manageID"
         },
         {
             type: "input",
-            message: "What is his email?",
+            message: "What is their email?",
             name: "manageEmail"
         },
         {
             type: "input",
-            message: "What is his office number?",
+            message: "What is their office number?",
             name: "manageOffice"
         },
-        {
-            type: "checkbox",
-            message: "Do you want to add an engineer or an intern?",
-            name: "engineerOrIntern",
-            choices: ["engineer", "intern"]
-        },
-        
     ])
     .then((answers) => {
         //const manager = new Manager(answers.manangeName)
-        console.log(answers);
+        //manager.addHTML
+        
+       inquirerLoop();
 
     })
     .catch(error => console.log(error));
+
+const inquirerLoop = function(){
+    inquirer
+        .prompt([
+        {
+            type: "list",
+            message: "Do you want to add an engineer or an intern?",
+            name: "engineerOrIntern",
+            choices: ["engineer", "intern", "finish"]
+        },
+    ])
+    .then((answers) => {
+    if(answers.engineerOrIntern == "engineer"){
+        inquirerEngineer();
+    }
+    if(answers.engineerOrIntern == "intern"){
+        inquirerIntern();
+    }
+
+    })
+    .catch(error => console.log(error));   
+}
+
+const inquirerEngineer = function() {
+    inquirer
+    // THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
+        .prompt([
+            {
+                type: "input",
+                message: "What is the engineer's name?",
+                name: "engName"
+            },
+            {
+                type: "input",
+                message: "What is their employee ID?",
+                name: "engID"
+            },
+            {
+                type: "input",
+                message: "What is their email?",
+                name: "engEmail"
+            },
+            {
+                type: "input",
+                message: "What is their github account?",
+                name: "engGit"
+            },
+
+        ])
+        .then((answers) => {
+             //let engineer = new Engineer (answers.engName)
+        //engineer.addHTML
+        console.log(answers);
+        inquirerLoop();
+    
+        })
+    .catch(error => console.log(error));   
+}
+
+const inquirerIntern = function() {
+    inquirer
+    // THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
+        .prompt([
+            {
+                type: "input",
+                message: "What is the intern's name?",
+                name: "intName"
+            },
+            {
+                type: "input",
+                message: "What is their employee ID?",
+                name: "intID"
+            },
+            {
+                type: "input",
+                message: "What is their email?",
+                name: "intEmail"
+            },
+            {
+                type: "input",
+                message: "What is their school name?",
+                name: "intSchool"
+            },
+
+        ])
+        .then((answers) => {
+             //let intern = new Intern (answers.intName)
+        //intern.addHTML
+        console.log(answers);
+        inquirerLoop();
+        })
+    .catch(error => console.log(error));   
+}
 
 // class Employee {
 //     constructor(eName) {
