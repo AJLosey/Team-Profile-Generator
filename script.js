@@ -6,7 +6,7 @@
 // WHEN I click on the GitHub username
 // THEN that GitHub profile opens in a new tab
 // WHEN I start the application
-// THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
+
 // WHEN I enter the team manager’s name, employee ID, email address, and office number
 // THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team
 // WHEN I select the engineer option
@@ -92,43 +92,67 @@ var inquirer = require('inquirer');
 
 
 inquirer
+// THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
     .prompt([
         {
             type: "input",
             message: "Who is your project manager?",
             name: "manageName"
         },
+        {
+            type: "input",
+            message: "What is his employee ID?",
+            name: "manageID"
+        },
+        {
+            type: "input",
+            message: "What is his email?",
+            name: "manageEmail"
+        },
+        {
+            type: "input",
+            message: "What is his office number?",
+            name: "manageOffice"
+        },
+        {
+            type: "checkbox",
+            message: "Do you want to add an engineer or an intern?",
+            name: "engineerOrIntern",
+            choices: ["engineer", "intern"]
+        },
+        
     ])
     .then((answers) => {
-        const manager = new Manager(answers.manangeName)
+        //const manager = new Manager(answers.manangeName)
+        console.log(answers);
 
     })
     .catch(error => console.log(error));
 
-class Employee {
-    constructor(eName) {
-        this.eName = eName;
+// class Employee {
+//     constructor(eName) {
+//         this.eName = eName;
 
-    }
+//     }
 
 
-}
+// }
 
-class Manager extends Employee {
-    constructor(eName) {
-        super(eName)
+// class Manager extends Employee {
+//     constructor(eName) {
+//         super(eName)
 
-    }
+//     }
 
-}
-
-    //todo: create tests
+// }
 
     //todo: prompt information for manage
 
     //todo: figure out how to give option for engineer or intern
 
-    //todo: make classes
+    //todo: make classes 
+    
+    //todo: create tests
 
     //todo: use inquirer input to make instances of those classes
 
