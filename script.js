@@ -184,14 +184,43 @@ const inquirerIntern = function() {
     .catch(error => console.log(error));   
 }
 
-// class Employee {
-//     constructor(eName) {
-//         this.eName = eName;
+class Employee {
+    constructor(eName, id, email) {
+        this.name = eName;
+        this.id = id;
+        this.email = email;
+    }
+    getName() {
+        return this.name;
+    }
+    getId() {
+        return this.id;
+    }
+    getEmail() {
+        return this.email;
+    }
+    getRole() {
+        return "Employee"
+    }
+    addHTML() {
 
-//     }
+        let text = `<div class="card row m-5">
+        <div class="card-body">
+        <ul class="list-group">
+        <li class="list-group-item">An item</li>
+        <li class="list-group-item">A second item</li>
+        <li class="list-group-item">A third item</li>
+        <li class="list-group-item">A fourth item</li>
+        <li class="list-group-item">And a fifth one</li>
+      </ul>
+        </div>
+      </div>`
+
+        $("#content").append(text)
+    }
 
 
-// }
+}
 
 // class Manager extends Employee {
 //     constructor(eName) {
