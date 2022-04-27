@@ -1,63 +1,9 @@
 
-// THEN an HTML file is generated that displays a nicely formatted team roster based on user input
-// WHEN I click on an email address in the HTML
-// THEN my default email program opens and populates the TO field of the email with the address
-// WHEN I click on the GitHub username
-// THEN that GitHub profile opens in a new tab
+var text2 = ``
 
-
-// THEN I exit the application, and the HTML is generated
-
-
-// **Important**: Make sure that you remove `dist` from the `.gitignore` file so that Git will track this folder and include it when you push up to your application's repository.
-
-// The application must include `Employee`, `Manager`, `Engineer`, and `Intern` classes. The tests for these classes (in the `_tests_` directory) must ALL pass.
-
-// The first class is an `Employee` parent class with the following properties and methods:
-
-// * `name`
-
-// * `id`
-
-// * `email`
-
-// * `getName()`
-
-// * `getId()`
-
-// * `getEmail()`
-
-// * `getRole()`&mdash;returns `'Employee'`
-
-// The other three classes will extend `Employee`.
-
-// In addition to `Employee`'s properties and methods, `Manager` will also have the following:
-
-// * `officeNumber`
-
-// * `getRole()`&mdash;overridden to return `'Manager'`
-
-// In addition to `Employee`'s properties and methods, `Engineer` will also have the following:
-
-// * `github`&mdash;GitHub username
-
-// * `getGithub()`
-
-// * `getRole()`&mdash;overridden to return `'Engineer'`
-
-// In addition to `Employee`'s properties and methods, `Intern` will also have the following:
-
-// * `school`
-
-// * `getSchool()`
-
-// * `getRole()`&mdash;overridden to return `'Intern'`
-
-// Finally, although it’s not a requirement, consider adding validati
-
+const { Engineer, Intern, Manager } = require(`./classes.js`)
+const fs = require('fs');
 var inquirer = require('inquirer');
-
-
 
 inquirer
     .prompt([
@@ -83,9 +29,9 @@ inquirer
         },
     ])
     .then((answers) => {
-        const manager = new Manager(answers.manangeName, answers.manageID, answers.manageEmail, answers.manageOffice);
+        const manager = new Manager(answers.manageName, answers.manageID, answers.manageEmail, answers.manageOffice);
 
-        manager.addHTML();
+        text2 += manager.addHTML();
 
         inquirerLoop();
 
@@ -108,6 +54,27 @@ const inquirerLoop = function () {
             }
             if (answers.engineerOrIntern == "intern") {
                 inquirerIntern();
+            }
+            if (answers.engineerOrIntern == "finish") {
+                var text1 = `<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Team Generator</title>
+  </head>
+  <body>
+  <div class="m-5">
+    ${text2}
+   
+  </body>
+</html>
+`
+                fs.writeFileSync("index.html", text1);
             }
 
         })
@@ -141,8 +108,9 @@ const inquirerEngineer = function () {
 
         ])
         .then((answers) => {
-            //let engineer = new Engineer (answers.engName)
-            //engineer.addHTML
+            let engineer = new Engineer(answers.engName, answers.engID, answers.engEmail, answers.engGit);
+
+            text2 += engineer.addHTML();
             console.log(answers);
             inquirerLoop();
 
@@ -177,143 +145,14 @@ const inquirerIntern = function () {
 
         ])
         .then((answers) => {
-            //let intern = new Intern (answers.intName)
-            //intern.addHTML
+            let intern = new Intern(answers.intName, answers.intID, answers.intEmail, answers.intSchool);
+
+            text2 += intern.addHTML();
             console.log(answers);
             inquirerLoop();
         })
         .catch(error => console.log(error));
 }
 
-class Employee {
-    constructor(eName, id, email) {
-        this.name = eName;
-        this.id = id;
-        this.email = email;
-    }
-    getName() {
-        return this.name;
-    }
-    getId() {
-        return this.id;
-    }
-    getEmail() {
-        return this.email;
-    }
-    getRole() {
-        return "Employee"
-    }
-    addHTML() {
 
-        let text = `<div class="card row m-5">
-        <div class="card-body">
-        <ul class="list-group">
-        <li class="list-group-item">Name: ${this.name}</li>
-        <li class="list-group-item">ID: ${this.id}</li>
-        <li class="list-group-item">email: <a href = "mailto: ${this.email}>${this.email}</a> </li>
-        <li class="list-group-item">${this.getRole()}</li>
-      </ul>
-        </div>
-      </div>`
-
-        $("#content").append(text)
-    }
-}
-
-class Manager extends Employee {
-    constructor(eName, id, email, officeNum) {
-        this.officeNum = officeNum;
-        super(eName, id, email)
-    }
-    getRole() {
-        return "Manager"
-    }
-    addHTML() {
-
-        let text = `<div class="card row m-5">
-        <div class="card-body">
-        <ul class="list-group">
-        <li class="list-group-item">Name: ${this.name}</li>
-        <li class="list-group-item">ID: ${this.id}</li>
-        <li class="list-group-item">Office: ${this.officeNum}</li>
-        <li class="list-group-item">email: <a href = "mailto: ${this.email}>${this.email}</a> </li>
-        <li class="list-group-item">${this.getRole()}</li>
-      </ul>
-        </div>
-      </div>`
-
-        $("#content").append(text)
-    }
-}
-
-class Engineer extends Employee {
-    constructor(eName, id, email, github) {
-        this.github = github;
-        super(eName, id, email)
-    }
-    getRole() {
-        return "Engineer"
-    }
-    getGit() {
-        return this.github;
-    }
-    addHTML() {
-
-        let text = `<div class="card row m-5">
-        <div class="card-body">
-        <ul class="list-group">
-        <li class="list-group-item">Name: ${this.name}</li>
-        <li class="list-group-item">ID: ${this.id}</li>
-        <li class="list-group-item">github: <a href="${this.getGit()}">${this.getGit()}</a></li>
-        <li class="list-group-item">email: <a href="mailto: ${this.email}>${this.email}</a> </li>
-        <li class="list-group-item">${this.getRole()}</li>
-      </ul>
-        </div>
-      </div>`
-
-        $("#content").append(text)
-    }
-}
-
-class Intern extends Employee {
-    constructor(eName, id, email, school) {
-        this.school = school;
-        super(eName, id, email)
-    }
-    getRole() {
-        return "Intern"
-    }
-    getSchool() {
-        return this.school;
-    }
-    addHTML() {
-
-        let text = `<div class="card row m-5">
-        <div class="card-body">
-        <ul class="list-group">
-        <li class="list-group-item">Name: ${this.name}</li>
-        <li class="list-group-item">ID: ${this.id}</li>
-        <li class="list-group-item">school: ${this.getSchool()}</li>
-        <li class="list-group-item">email: <a href="mailto: ${this.email}>${this.email}</a> </li>
-        <li class="list-group-item">${this.getRole()}</li>
-      </ul>
-        </div>
-      </div>`
-
-        $("#content").append(text)
-    }
-}
-
-module.exports.Employee = Employee
-module.exports.Engineer = Engineer
-module.exports.Intern = Intern
-module.exports.Manager = Manager
-
-
-
-    //todo: make classes
-
-    //todo: use inquirer input to make instances of those classes
-
-    //todo: add classes to html
 

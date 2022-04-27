@@ -1,7 +1,7 @@
-const Engineer = require("../script").Engineer;
+const Engineer = require("../classes").Engineer;
 
 describe("Engineer", () => {
-    it("should have a name, id, email, github, and role should be engineer"), () => {
+    it("should have a name, id, email, github, and role should be engineer", () => {
         const employee = new Engineer("Name", "42", "Name@e.mail", "engGit");
 
         expect(employee.getName()).toEqual("Name");
@@ -9,6 +9,6 @@ describe("Engineer", () => {
         expect(employee.getEmail()).toEqual("Name@e.mail")
         expect(employee.getGit()).toEqual("engGit");
         expect(employee.getRole()).toEqual("Engineer");
-    }
+    })
 
 })
