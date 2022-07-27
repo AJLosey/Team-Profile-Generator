@@ -19,27 +19,27 @@ An inquirer program that give a brief html page listing the team members for a p
         
 [Questions](#questions)
         
-### Installation {#installation}
+### Installation
         
 Download from github, use npm install for fs, inquirer, and jest
         
-### Usage {#usage}
+### Usage
         
 run node script.js and answer the prompts
         
-### License {#license}
+### License
         
 MIT license
         
-### Contributing {#contributing}
+### Contributing
         
 Aaron Losey
         
-### Tests {#tests}
+### Tests
         
 run npm test
         
-### Questions? {#questions}
+### Questions?
         
 Send questions to
         
